@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sustech.cs307.project2.mapper.InventoryMapper">
+
+    <resultMap id="AvgStockByCenterMap" type="java.util.Map">
+        <result property="supply_center" column="supply_center" javaType="java.lang.String"/>
+        <result property="avg" column="avg" javaType="java.lang.Double"/>
+    </resultMap>
+
+    <resultMap id="getProductByNumberMap" type="java.util.Map">
+        <result property="supply_center" column="supply_center" javaType="java.lang.String"/>
+        <result property="product_model" column="product_model" javaType="java.lang.String"/>
+        <result property="quantity" column="quantity" javaType="java.lang.Long"/>
+    </resultMap>
+
+    <select id="getAvgStockByCenter" resultMap="AvgStockByCenterMap">
+        select supply_center, round(avg(stock), 1) as avg
+        from (select supply_center, importNum - exportNum as stock from inventory) a
+        group by supply_center
+        order by supply_center
+    </select>
+
+    <select id="getProductByNumber" resultMap="getProductByNumberMap">
+        select supply_center, product_model, importNum - exportNum as quantity
+        from model
+                 join inventory on model.model = inventory.product_model
+        where number = #{number}
+        order by supply_center
+    </select>
+
+</mapper>

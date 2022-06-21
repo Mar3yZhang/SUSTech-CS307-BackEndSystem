@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sustech.cs307.project2.mapper.StaffMapper">
+    <resultMap id="staffTypeToStaffCntMap" type="java.util.Map">
+        <result property="type" column="type" javaType="java.lang.String"/>
+        <result property="count" column="count" javaType="java.lang.Integer"/>
+    </resultMap>
+    <resultMap id="listPageMap" type="java.util.Map">
+        <result property="name" column="name" javaType="java.lang.String"/>
+        <result property="age" column="age" javaType="java.lang.Integer"/>
+        <result property="gender" column="gender" javaType="java.lang.String"/>
+        <result property="number" column="number" javaType="java.lang.String"/>
+        <result property="mobileNumber" column="mobileNumber" javaType="java.lang.String"/>
+        <result property="type" column="type" javaType="java.lang.String"/>
+        <result property="supplyCenter" column="supplyCenter" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="getAllStaffCount" resultMap="staffTypeToStaffCntMap">
+        select type as type, count(*) as count
+        from staff
+        group by type
+    </select>
+
+    <select id="listPage" resultMap="listPageMap">
+        select staff.name    as name,
+               age,
+               gender,
+               number,
+               mobile_number as mobileNumber,
+               type,
+               c.name        as supplyCenter
+        from staff
+                 join supply_center c on c.name = staff.supply_center
+    </select>
+
+    <select id="selectByNumberPage" resultMap="listPageMap">
+        select staff.name    as name,
+               age,
+               gender,
+               number,
+               mobile_number as mobileNumber,
+               type,
+               c.name        as supplyCenter
+        from staff
+                 join supply_center c on c.name = staff.supply_center
+        where number = #{number}
+    </select>
+</mapper>

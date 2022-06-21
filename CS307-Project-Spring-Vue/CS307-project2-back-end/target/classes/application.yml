@@ -1,0 +1,44 @@
+#已经修改yml的文件编码方式为UTF-8
+
+spring:
+  datasource:
+    # jdbc 连接基础配置
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/CS307-project2
+    username: postgres
+    password: sg68132845
+    driver-class-name: org.postgresql.Driver
+    #hikari数据源特性配置
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+mybatis-plus:
+  #  configuration:
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+
+  mapper-locations: classpath:com/sustech/cs307/project2/mapper/xml/*.xml
+
+server:
+  port: 8181
+
+#关闭打印日志的功能
+#logging.level.org.apache.ignite: OFF
+#logging.config: classpath:log.xml
+
+#  #把执行的sql语句打印到log
+#logging:
+#  level:
+#    com:
+#      company:
+#        cache: debug

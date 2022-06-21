@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sustech.cs307.mapper.EnterpriseMapper">
+    <resultMap id="enterpriseSelectListMap" type="java.util.Map">
+        <result property="enterpriseName" column="enterpriseName" javaType="java.lang.String"/>
+        <result property="country" column="country" javaType="java.lang.String"/>
+        <result property="city" column="city" javaType="java.lang.String"/>
+        <result property="centerName" column="centerName" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="selectPage" resultMap="enterpriseSelectListMap">
+        select enterprise.name as enterpriseName, country, city, c.name as supply_center, industry
+        from enterprise
+                 join supply_center c on c.name = enterprise.supply_center
+    </select>
+
+    <select id="selectByNamePage" resultMap="enterpriseSelectListMap">
+        select enterprise.name as enterpriseName, country, city, c.name as supply_center, industry
+        from enterprise
+                 join supply_center c on c.name = enterprise.supply_center
+        where enterprise.name = #{name}
+    </select>
+</mapper>

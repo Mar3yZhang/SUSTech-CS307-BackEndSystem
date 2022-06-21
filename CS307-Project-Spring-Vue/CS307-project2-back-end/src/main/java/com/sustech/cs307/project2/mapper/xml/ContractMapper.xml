@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sustech.cs307.project2.mapper.ContractMapper">
+    <resultMap id="getContractInfoMap" type="java.util.Map">
+        <result property="product_model" column="product_model" javaType="java.lang.String"/>
+        <result property="name" column="name" javaType="java.lang.String"/>
+        <result property="quantity" column="quantity" javaType="java.lang.Long"/>
+        <result property="unit_price" column="unit_price" javaType="java.lang.Long"/>
+        <result property="estimated_delivery_date" column="estimated_delivery_date" javaType="java.sql.Date"/>
+        <result property="lodgement_date" column="lodgement_date" javaType="java.sql.Date"/>
+    </resultMap>
+
+    <select id="getContractInfo" resultMap="getContractInfoMap">
+        select distinct order_record.product_model, name, quantity, unit_price, estimated_delivery_date, lodgement_date
+        from order_record
+                 join staff on order_record.salesman_num = staff.number
+                 join inventory i
+                      on order_record.product_model = i.product_model
+                 join model m
+                      on m.model = order_record.product_model
+        where contract_num = #{contract_number}
+    </select>
+</mapper>

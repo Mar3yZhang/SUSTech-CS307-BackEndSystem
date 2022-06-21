@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CS307-Project-Spring-Vue.iml" filepath="$PROJECT_DIR$/.idea/CS307-Project-Spring-Vue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CS307-project2-back-end/CS307-project2-back-end.iml" filepath="$PROJECT_DIR$/CS307-project2-back-end/CS307-project2-back-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DB_project2/project2/project2.iml" filepath="$PROJECT_DIR$/DB_project2/project2/project2.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,102 @@
+CREATE TABLE IF NOT EXISTS supply_center
+(
+    name character varying(100) PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS enterprise
+(
+    name          character varying(200) PRIMARY KEY,
+    country       character varying(50)  NOT NULL,
+    city          character varying(50),
+    supply_center character varying(100) NOT NULL,
+    industry      character varying(50)  NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS model
+(
+    number     character varying(10)  NOT NULL,
+    model      character varying(100) PRIMARY KEY,
+    product    character varying(100) NOT NULL,
+    unit_price BIGINT                 NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS staff
+(
+    name          character varying(50) NOT NULL,
+    age           BIGINT                NOT NULL,
+    gender        character varying(50) NOT NULL,
+    number        character varying(8) PRIMARY KEY,
+    supply_center character varying(50) NOT NULL,
+    mobile_number character varying(11) NOT NULL,
+    type          character varying(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS stock_in_record
+(
+    supply_center  character varying(100) NOT NULL,
+    product_model  character varying(100) NOT NULL,
+    supply_staff   character varying(8)   NOT NULL,
+    date           date                   NOT NULL,
+    purchase_price BIGINT                 NOT NULL,
+    quantity       BIGINT                 NOT NULL
+);
+
+alter table stock_in_record
+    add constraint stock_in_record_unique UNIQUE (supply_center, product_model, supply_staff);
+
+CREATE TABLE IF NOT EXISTS order_record
+(
+    contract_num            character varying(10)  NOT NULL,
+    enterprise              character varying(200) NOT NULL,
+    product_model           character varying(100) NOT NULL,
+    quantity                BIGINT                 NOT NULL,
+    contract_manager        character varying(8)   NOT NULL,
+    contract_date           date                   NOT NULL,
+    estimated_delivery_date date                   NOT NULL,
+    lodgement_date          date                   NOT NULL,
+    salesman_num            character varying(8)   NOT NULL,
+    contract_type           character varying(50)  NOT NULL
+);
+
+alter table order_record
+    add constraint order_record_unique UNIQUE (contract_num, enterprise, product_model,salesman_num);
+
+CREATE TABLE IF NOT EXISTS inventory
+(
+    supply_center character varying(50)  NOT NULL, --明确是哪一个供货中心的哪一个模板
+    product_model character varying(100) NOT NULL,
+    importNum     BIGINT                 NOT NULL, --购入的总个数
+    exportNum     BIGINT                 NOT NULL, --卖出的总个数
+    totalCost     BIGINT                 NOT NULL, --购进的总花费
+    totalInterest BIGINT                 NOT NULL, --卖出的总利润
+    stockInNum    BIGINT                 NOT NULL, --进货总次数
+    placeOrderNum BIGINT                 NOT NULL  --被其他公司购买的总次数
+);
+
+alter table inventory
+    add constraint inventory_unique UNIQUE (supply_center, product_model);
+
+CREATE TABLE IF NOT EXISTS contract
+(
+    contract_number       character varying(10) PRIMARY KEY,
+    contract_manager_name character varying(50)  NOT NULL,
+    enterprise            character varying(200) NOT NULL,
+    supply_center         character varying(50)  NOT NULL,
+    orderNum              bigint                 not null
+)
+
+
+create table "user"
+(
+    username varchar,
+    password varchar,
+    role     integer default 1
+);
+
+alter table "user"
+    owner to postgres;
+
+create unique index user_username_uindex
+    on "user" (username);
+
