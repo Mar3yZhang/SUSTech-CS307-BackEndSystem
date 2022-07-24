@@ -6,7 +6,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/CS307-project2
     username: postgres
-    password: sg68132845
+    password: ******
     driver-class-name: org.postgresql.Driver
     #hikari数据源特性配置
     hikari:
